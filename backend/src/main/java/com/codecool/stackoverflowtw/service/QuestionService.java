@@ -35,14 +35,16 @@ public class QuestionService {
     String sql =
       """
         SELECT
-          id,
-          title,
-          numberofanswers,
-          numberofviews,
-          createdat
+          questions.id,
+          users.username,
+          questions.title,
+          questions.numberofanswers,
+          questions.numberofviews,
+          questions.createdat
         FROM
-          questions;
-        """;
+          questions
+        INNER JOIN users ON questions.userid = users.id;
+      """;
 
     try (
       Connection conn = psqlConnector.getConnection();
@@ -51,12 +53,13 @@ public class QuestionService {
 
       while (rs.next()) {
         int id = rs.getInt(1);
-        String title = rs.getString(2);
-        int numberOfAnswers = rs.getInt(3);
-        int numberOfViews = rs.getInt(4);
-        LocalDateTime date = rs.getTimestamp(5).toLocalDateTime();
+        String userName = rs.getString(2);
+        String title = rs.getString(3);
+        int numberOfAnswers = rs.getInt(4);
+        int numberOfViews = rs.getInt(5);
+        LocalDateTime date = rs.getTimestamp(6).toLocalDateTime();
 
-        questions.add(new QuestionForHomePageListDTO(id, title, numberOfAnswers, numberOfViews, date));
+        questions.add(new QuestionForHomePageListDTO(id, userName, title, numberOfAnswers, numberOfViews, date));
       }
     } catch (SQLException exception) {
       logger.logError(exception.getMessage());
@@ -66,7 +69,7 @@ public class QuestionService {
   }
 
   public QuestionForHomePageListDTO getQuestionById(int id) {
-    // TODO
+    // TODO - this will need a different DTO object.
     questionsDAO.sayHi();
     return null;
 //    return new QuestionDTO(id, "example title", "example desc", LocalDateTime.now());
