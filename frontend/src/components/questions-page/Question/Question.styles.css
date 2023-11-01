@@ -38,6 +38,12 @@
       align-self: center;
       margin: 0 0 0 auto;
       padding: 0 2rem 0 0;
+      color: var(--secondary-main);
+      font-size: 1.4rem;
+
+      & span {
+        color: var(--primary-main);
+      }
     }
 
   &:last-of-type {
