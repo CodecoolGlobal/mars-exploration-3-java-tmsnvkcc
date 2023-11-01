@@ -4,8 +4,8 @@ import com.codecool.stackoverflowtw.dao.QuestionsDAO;
 import com.codecool.stackoverflowtw.dao.QuestionsDaoJdbc;
 import com.codecool.stackoverflowtw.logger.ConsoleLogger;
 import com.codecool.stackoverflowtw.logger.Logger;
-import com.codecool.stackoverflowtw.sqlitedb.SqliteConnector;
-import com.codecool.stackoverflowtw.sqlitedb.SqliteConnectorImpl;
+import com.codecool.stackoverflowtw.postgresDb.PsqlConnector;
+import com.codecool.stackoverflowtw.postgresDb.PsqlConnectorImpl;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -28,7 +28,7 @@ public class StackoverflowTwApplication {
     }
 
     @Bean
-    SqliteConnector getDBConnector() {
-        return new SqliteConnectorImpl(getLogger());
+    PsqlConnector getDBConnector() {
+        return new PsqlConnectorImpl(getLogger());
     }
 }
