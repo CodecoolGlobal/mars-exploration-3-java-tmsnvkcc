@@ -1,4 +1,4 @@
-package com.codecool.stackoverflowtw.sqlitedb;
+package com.codecool.stackoverflowtw.postgresDb;
 
 import com.codecool.stackoverflowtw.logger.Logger;
 
@@ -7,10 +7,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Map;
 
-public class SqliteConnectorImpl implements SqliteConnector {
+public class PsqlConnectorImpl implements PsqlConnector {
     private final Logger logger;
 
-    public SqliteConnectorImpl(Logger logger) {
+    public PsqlConnectorImpl(Logger logger) {
         this.logger = logger;
     }
 
