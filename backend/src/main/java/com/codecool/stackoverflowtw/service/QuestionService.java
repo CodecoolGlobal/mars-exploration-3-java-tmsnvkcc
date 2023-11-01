@@ -2,7 +2,7 @@ package com.codecool.stackoverflowtw.service;
 
 import com.codecool.stackoverflowtw.dao.QuestionsDAO;
 import com.codecool.stackoverflowtw.controller.dto.NewQuestionDTO;
-import com.codecool.stackoverflowtw.controller.dto.QuestionDTO;
+import com.codecool.stackoverflowtw.controller.dto.QuestionForHomePageListDTO;
 import com.codecool.stackoverflowtw.logger.Logger;
 import com.codecool.stackoverflowtw.postgresDb.PsqlConnector;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,15 +29,16 @@ public class QuestionService {
     this.logger = logger;
   }
 
-  public List<QuestionDTO> getAllQuestions() {
-    List<QuestionDTO> questions = new ArrayList<>();
+  public List<QuestionForHomePageListDTO> getAllQuestions() {
+    List<QuestionForHomePageListDTO> questions = new ArrayList<>();
 
     String sql =
       """
         SELECT
           id,
           title,
-          description,
+          numberofanswers,
+          numberofviews,
           createdat
         FROM
           questions;
@@ -52,10 +52,11 @@ public class QuestionService {
       while (rs.next()) {
         int id = rs.getInt(1);
         String title = rs.getString(2);
-        String description = rs.getString(3);
-        LocalDateTime date = rs.getTimestamp(4).toLocalDateTime();
+        int numberOfAnswers = rs.getInt(3);
+        int numberOfViews = rs.getInt(4);
+        LocalDateTime date = rs.getTimestamp(5).toLocalDateTime();
 
-        questions.add(new QuestionDTO(id, title, description, date));
+        questions.add(new QuestionForHomePageListDTO(id, title, numberOfAnswers, numberOfViews, date));
       }
     } catch (SQLException exception) {
       logger.logError(exception.getMessage());
@@ -64,10 +65,11 @@ public class QuestionService {
     return questions;
   }
 
-  public QuestionDTO getQuestionById(int id) {
+  public QuestionForHomePageListDTO getQuestionById(int id) {
     // TODO
     questionsDAO.sayHi();
-    return new QuestionDTO(id, "example title", "example desc", LocalDateTime.now());
+    return null;
+//    return new QuestionDTO(id, "example title", "example desc", LocalDateTime.now());
   }
 
   public boolean deleteQuestionById(int id) {
@@ -81,26 +83,3 @@ public class QuestionService {
     return createdId;
   }
 }
-
-//    public List<Transaction> getAll() {
-
-//        try (
-//          Connection conn = sqliteConnector.getConnection();
-//          Statement stmt = conn.createStatement();
-//          ResultSet rs = stmt.executeQuery(sql)) {
-//
-//            while (rs.next()) {
-//                int id = rs.getInt("id");
-//                LocalDate date = LocalDate.parse(rs.getString("date"));
-//                User user = userRepository.getUser(rs.getInt("user_id"));
-//                Product product = productRepository.getProduct(rs.getInt("product_id"));
-//                double pricePaid = rs.getInt("price_paid");
-//
-//                transactions.add(new Transaction(id, date, user, product, pricePaid));
-//            }
-//        } catch (SQLException exception) {
-//            logger.logError(exception.getMessage());
-//        }
-//
-//        return transactions;
-//    }

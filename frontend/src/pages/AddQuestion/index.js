@@ -1,3 +1,3 @@
-import AddQuestion from "./AddQuestion";
+import AddQuestionPage from "./AddQuestion.page";
 
-export default AddQuestion;
+export default AddQuestionPage;
