@@ -6,15 +6,17 @@ import {
 } from 'react-router-dom';
 import {
   AddQuestion,
+  ErrorPage,
   Home,
-  Questions
+  QuestionsComponent
 } from "pages";
+import { Layout } from "components";
 
 const router = createBrowserRouter(createRoutesFromElements(
-  <Route path={'/'}>
+  <Route path={'/'} element={<Layout />} errorElement={<ErrorPage />}>
     <Route index element={<Home />} />
-    <Route path={'add-question'} element={<AddQuestion />} />
-    <Route path={'questions'} element={<Questions />} />
+    <Route path={'/question/new'} element={<AddQuestion />} />
+    <Route path={'questions'} element={<QuestionsComponent />} />
   </Route>
 ));
 

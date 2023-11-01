@@ -1,3 +1,3 @@
-import Questions from "./Questions";
+import QuestionsComponent from "./Questions.component";
 
-export default Questions;
+export default QuestionsComponent;
