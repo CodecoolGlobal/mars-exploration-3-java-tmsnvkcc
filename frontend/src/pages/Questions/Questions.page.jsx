@@ -1,8 +1,9 @@
 import { PageTitle } from 'components/general';
+import { Questions } from 'components/questions-page';
 import { useHandleQuestionsFetch } from './Questions.hooks';
 import './Questions.styles.css';
 
-const QuestionsComponent = () => {
+const QuestionsPage = () => {
   const { data, loading } = useHandleQuestionsFetch();
 
   if (loading) {
@@ -12,19 +13,11 @@ const QuestionsComponent = () => {
   }
 
   return (
-    <div>
+    <>
       <PageTitle title={'Questions'} />
-      {data.map((question) => {
-        return (
-          <div key={question.id}>
-            <h1>{question.title}</h1>
-            <p>{question.description}</p>
-            <p>{question.createdAt}</p>
-          </div>
-        );
-      })}
-    </div>
+      <Questions data={data} />
+    </>
   );
 };
 
-export default QuestionsComponent;
+export default QuestionsPage;

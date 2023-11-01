@@ -1,7 +1,10 @@
 /* reset & default settings */
 :root {
   --primary-main: rgb(12, 13, 14);
-  --primary-background: rgb(250, 250, 250);
+  --primary-background: rgb(255, 255, 255);
+  --secondary-main: rgb(27, 117, 208);
+  --dark-green: rgb(24, 134, 75);
+  --dark-gray: rgb(99, 107, 116);
 }
 
 *,
@@ -19,7 +22,7 @@ html {
 }
 
 body {
-  font-family: 'Roboto Mono', monospace;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   background-color: var(--primary-background);
   color: var(--primary-main);
   font-size: 1.2rem;

@@ -1,3 +1,3 @@
-import QuestionsComponent from "./Questions.component";
+import QuestionsPage from "./Questions.page";
 
-export default QuestionsComponent;
+export default QuestionsPage;
