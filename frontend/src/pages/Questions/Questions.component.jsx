@@ -1,5 +1,6 @@
-import { useHandleQuestionsFetch } from "./Questions.hooks";
-import "./Questions.styles.css";
+import { PageTitle } from 'components/general';
+import { useHandleQuestionsFetch } from './Questions.hooks';
+import './Questions.styles.css';
 
 const QuestionsComponent = () => {
   const { data, loading } = useHandleQuestionsFetch();
@@ -12,7 +13,7 @@ const QuestionsComponent = () => {
 
   return (
     <div>
-      <h1>Questions</h1>
+      <PageTitle title={'Questions'} />
       {data.map((question) => {
         return (
           <div key={question.id}>

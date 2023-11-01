@@ -9,8 +9,9 @@ import {
   ErrorPage,
   Home,
   QuestionsComponent
-} from "pages";
-import { Layout } from "components";
+} from 'pages';
+import { Layout } from 'components/layout-related';
+import '../index.css';
 
 const router = createBrowserRouter(createRoutesFromElements(
   <Route path={'/'} element={<Layout />} errorElement={<ErrorPage />}>
