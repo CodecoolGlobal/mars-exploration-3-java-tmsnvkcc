@@ -2,13 +2,19 @@
   "name": "frotend",
   "version": "0.1.0",
   "private": true,
-  "author": "",
-  "description": "",
-  "keywords": [],
+  "author": "Erik, Andris, Joco, Tamas",
+  "description": "CodeCool OOP Room TW5 project - Java Spring / React with PSQL",
+  "keywords": [
+    "react",
+    "java spring",
+    "html, css",
+    "postgresql",
+    "codecool oop tw5"
+  ],
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/CodecoolGlobal/mars-exploration-3-java-tmsnvkcc"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.4.0",

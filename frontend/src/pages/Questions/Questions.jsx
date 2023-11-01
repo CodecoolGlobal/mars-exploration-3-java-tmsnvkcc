@@ -1,12 +1,10 @@
-// import React from "react";
 import "./Questions.css";
-import Navbar from "../../components/Navbar/Navbar";
+// import Navbar from "../../components/Navbar/Navbar";
 
 const Questions = () => {
-
     return (
         <div>
-            <Navbar />
+            {/*<Navbar />*/}
             <h1>Questions</h1>
         </div>
     );
