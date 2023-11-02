@@ -1,0 +1,13 @@
+.individual-question-page {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  margin: 5rem 15% 0 15%;
+
+  & .answer-number {
+    margin: 5rem 0 0 0;
+    font-size: 3rem;
+  }
+
+
+}

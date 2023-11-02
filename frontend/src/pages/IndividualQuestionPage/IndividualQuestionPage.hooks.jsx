@@ -12,13 +12,10 @@ const useHandleQuestionDetailsLoader = () => {
   useEffect(() => {
     const questionDetailsLoader = async () => {
       try {
-        console.log(id);
         const response = await fetch(`/questions/${id}`, {
           method: 'GET',
         });
-
         const data = await response.json();
-
         setData(data);
       } catch (error) {
         console.error(error);
