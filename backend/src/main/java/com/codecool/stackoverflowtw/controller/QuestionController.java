@@ -1,7 +1,7 @@
 package com.codecool.stackoverflowtw.controller;
 
 import com.codecool.stackoverflowtw.controller.dto.NewQuestionDTO;
-import com.codecool.stackoverflowtw.controller.dto.QuestionForHomePageListDTO;
+import com.codecool.stackoverflowtw.controller.dto.QuestionsForAllQuestionsPageDTO;
 import com.codecool.stackoverflowtw.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,12 +19,12 @@ public class QuestionController {
     }
 
     @GetMapping("/all")
-    public List<QuestionForHomePageListDTO> getAllQuestions() {
+    public List<QuestionsForAllQuestionsPageDTO> getAllQuestions() {
         return questionService.getAllQuestions();
     }
 
     @GetMapping("/{id}")
-    public QuestionForHomePageListDTO getQuestionById(@PathVariable int id) {
+    public QuestionsForAllQuestionsPageDTO getQuestionById(@PathVariable int id) {
         return null;
     }
 
