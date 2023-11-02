@@ -1,7 +1,5 @@
 package com.codecool.stackoverflowtw;
 
-import com.codecool.stackoverflowtw.dao.QuestionsDAO;
-import com.codecool.stackoverflowtw.dao.QuestionsDaoJdbc;
 import com.codecool.stackoverflowtw.logger.ConsoleLogger;
 import com.codecool.stackoverflowtw.logger.Logger;
 import com.codecool.stackoverflowtw.postgresDb.PsqlConnector;
@@ -17,10 +15,7 @@ public class StackoverflowTwApplication {
         SpringApplication.run(StackoverflowTwApplication.class, args);
     }
 
-    @Bean
-    public QuestionsDAO questionsDAO() {
-        return new QuestionsDaoJdbc();
-    }
+
 
     @Bean
     Logger getLogger() {

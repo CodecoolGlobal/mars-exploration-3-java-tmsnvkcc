@@ -18,9 +18,11 @@ import java.util.List;
 
 @Service
 public class QuestionService {
-  private QuestionsDAO questionsDAO;
-  private PsqlConnector psqlConnector;
-  private Logger logger;
+  public static final int NUMBER_OF_LIKES = 0;
+  public static final int NUMBER_OF_VIEWS = 0;
+  private final QuestionsDAO questionsDAO;
+  private final PsqlConnector psqlConnector;
+  private final Logger logger;
 
   @Autowired
   public QuestionService(QuestionsDAO questionsDAO, PsqlConnector psqlConnector, Logger logger) {
@@ -80,9 +82,10 @@ public class QuestionService {
     return false;
   }
 
-  public int addNewQuestion(NewQuestionDTO question) {
-    // TODO
+  public void addNewQuestion(NewQuestionDTO question) {
     int createdId = 0;
-    return createdId;
+    // TODO
+    questionsDAO.add(question.title(), question.description(), NUMBER_OF_LIKES, NUMBER_OF_VIEWS);
+
   }
 }
