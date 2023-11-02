@@ -49,4 +49,16 @@ public class QuestionController {
     public boolean deleteQuestionById(@PathVariable int id) {
         return false;
     }
+
+    @PatchMapping("/increase-view-count/{id}")
+    public ResponseEntity<Object> updateViewCounter(@PathVariable int id) {
+        try {
+            int currentViews = questionService.getQuestionById(id).numberOfViews();
+            questionService.increaseViewCount(id, currentViews);
+            logger.logInfo("View count updated!");
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception exception) {
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
 }

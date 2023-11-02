@@ -1,7 +1,6 @@
 package com.codecool.stackoverflowtw.dao;
 
 import com.codecool.stackoverflowtw.dao.model.Answer;
-import com.codecool.stackoverflowtw.dao.model.Question;
 import com.codecool.stackoverflowtw.logger.Logger;
 import com.codecool.stackoverflowtw.postgresDb.PsqlConnector;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -11,7 +11,6 @@ import com.codecool.stackoverflowtw.dao.model.Answer;
 import com.codecool.stackoverflowtw.dao.model.Question;
 import com.codecool.stackoverflowtw.dao.model.User;
 import com.codecool.stackoverflowtw.logger.Logger;
-import com.codecool.stackoverflowtw.postgresDb.PsqlConnector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -107,5 +106,9 @@ public class QuestionService {
 
   public void addNewQuestion(NewQuestionDTO question) {
     questionsDAOJdbc.add(question.title(), question.description(), NUMBER_OF_ANSWERS, NUMBER_OF_VIEWS);
+  }
+
+  public void increaseViewCount(int id, int currentViews) {
+    questionsDAOJdbc.increaseViewCount(id, currentViews);
   }
 }
