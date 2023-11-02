@@ -8,7 +8,8 @@ import {
   AddQuestionPage,
   ErrorPagePage,
   HomePage,
-  QuestionsPage
+  QuestionsPage,
+  IndividualQuestionPage
 } from 'pages';
 import { Layout } from 'components/layout-related';
 import '../index.css';
@@ -17,7 +18,10 @@ const router = createBrowserRouter(createRoutesFromElements(
   <Route path={'/'} element={<Layout />} errorElement={<ErrorPagePage />}>
     <Route index element={<HomePage />} />
     <Route path={'/question/new'} element={<AddQuestionPage />} />
-    <Route path={'questions'} element={<QuestionsPage />} />
+    <Route path={'questions'}>
+      <Route index element={<QuestionsPage />} />
+      <Route path={'id/:id'} element={<IndividualQuestionPage />} />
+    </Route>
   </Route>
 ));
 

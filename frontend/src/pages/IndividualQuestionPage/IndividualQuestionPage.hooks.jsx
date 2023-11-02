@@ -1,16 +1,19 @@
+import { useParams } from 'react-router-dom';
 import {
   useEffect,
   useState,
 } from 'react';
 
-const useHandleQuestionsFetch = () => {
+const useHandleQuestionDetailsLoader = () => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
+  const { id } = useParams();
 
   useEffect(() => {
-    const getQuestions = async () => {
+    const questionDetailsLoader = async () => {
       try {
-        const response = await fetch('/questions/all', {
+        console.log(id);
+        const response = await fetch(`/questions/${id}`, {
           method: 'GET',
         });
 
@@ -18,21 +21,19 @@ const useHandleQuestionsFetch = () => {
 
         setData(data);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       } finally {
         setLoading(false);
       }
     };
 
-    getQuestions();
+    questionDetailsLoader();
   }, []);
 
   return {
-    data,
     loading,
+    data,
   };
 };
 
-export {
-  useHandleQuestionsFetch,
-};
+export default useHandleQuestionDetailsLoader;
