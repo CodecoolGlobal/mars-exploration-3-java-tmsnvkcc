@@ -1,12 +1,13 @@
 import './Home.css';
 import Chooser from '../../components/general/Chooser';
-import PageTitle from '../../components/general/PageTitle';
+// import PageTitle from '../../components/general/PageTitle';
 
 const HomePage = () => {
 
   return (
     <div className={'home-page-full'}>
-      <PageTitle title={'Home'}/>
+      {/*<PageTitle title={'Home'}/>*/}
+      <hr/>
 
       <p>
         <strong>Welcome to our website</strong>, a platform designed to engage and empower you with the knowledge and insights you seek.
@@ -34,6 +35,8 @@ const HomePage = () => {
         <br/>We have a variety of topics to choose from, ranging from technology and science to literature and arts.
         <br/>Whether you are a student, a professional, or just someone who loves to learn, you will find something that interests you here neuraltext.com.
       </p>
+
+      <hr/>
 
     </div>
   );
