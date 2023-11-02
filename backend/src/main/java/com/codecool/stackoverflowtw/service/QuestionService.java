@@ -2,75 +2,58 @@ package com.codecool.stackoverflowtw.service;
 
 import com.codecool.stackoverflowtw.dao.QuestionsDAO;
 import com.codecool.stackoverflowtw.controller.dto.NewQuestionDTO;
-import com.codecool.stackoverflowtw.controller.dto.QuestionForHomePageListDTO;
+import com.codecool.stackoverflowtw.controller.dto.QuestionsForAllQuestionsPageDTO;
+import com.codecool.stackoverflowtw.dao.UserDAO;
+import com.codecool.stackoverflowtw.dao.model.Question;
+import com.codecool.stackoverflowtw.dao.model.User;
 import com.codecool.stackoverflowtw.logger.Logger;
-import com.codecool.stackoverflowtw.postgresDb.PsqlConnector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class QuestionService {
-  private QuestionsDAO questionsDAO;
-  private PsqlConnector psqlConnector;
+  private QuestionsDAO questionsDAOJdbc;
+  private UserDAO userDAOJdbc;
   private Logger logger;
 
   @Autowired
-  public QuestionService(QuestionsDAO questionsDAO, PsqlConnector psqlConnector, Logger logger) {
-    this.questionsDAO = questionsDAO;
-    this.psqlConnector = psqlConnector;
+  public QuestionService(QuestionsDAO questionsDAOJdbc, UserDAO userDAOJdbc, Logger logger) {
+    this.questionsDAOJdbc = questionsDAOJdbc;
+    this.userDAOJdbc = userDAOJdbc;
     this.logger = logger;
   }
 
-  public List<QuestionForHomePageListDTO> getAllQuestions() {
-    List<QuestionForHomePageListDTO> questions = new ArrayList<>();
+  public List<QuestionsForAllQuestionsPageDTO> getAllQuestions() {
+    List<QuestionsForAllQuestionsPageDTO> questions = new ArrayList<>();
 
-    String sql =
-      """
-        SELECT
-          questions.id,
-          users.username,
-          questions.title,
-          questions.numberofanswers,
-          questions.numberofviews,
-          questions.createdat
-        FROM
-          questions
-        INNER JOIN users ON questions.userid = users.id;
-      """;
+    List<Question> questionsDAO = questionsDAOJdbc.getAll();
+    List<User> usersDAO = userDAOJdbc.getAll();
 
-    try (
-      Connection conn = psqlConnector.getConnection();
-      Statement stmt = conn.createStatement();
-      ResultSet rs = stmt.executeQuery(sql)) {
+    for (Question question : questionsDAO) {
+      int id = question.getId();
+      String title = question.getTitle();
+      int numberOfAnswers = question.getNumberOfAnswers();
+      int numberOfViews = question.getNumberOfViews();
+      LocalDateTime createdAt = question.getCreatedAt();
+      String userName = usersDAO.stream()
+                                .filter(user -> user.getId() == question.getUserId())
+                                .collect(Collectors.toList())
+                                .get(0).getUsername();
 
-      while (rs.next()) {
-        int id = rs.getInt(1);
-        String userName = rs.getString(2);
-        String title = rs.getString(3);
-        int numberOfAnswers = rs.getInt(4);
-        int numberOfViews = rs.getInt(5);
-        LocalDateTime date = rs.getTimestamp(6).toLocalDateTime();
-
-        questions.add(new QuestionForHomePageListDTO(id, userName, title, numberOfAnswers, numberOfViews, date));
-      }
-    } catch (SQLException exception) {
-      logger.logError(exception.getMessage());
+      questions.add(new QuestionsForAllQuestionsPageDTO(id, userName, title, numberOfAnswers, numberOfViews, createdAt));
     }
 
     return questions;
   }
 
-  public QuestionForHomePageListDTO getQuestionById(int id) {
+  public QuestionsForAllQuestionsPageDTO getQuestionById(int id) {
     // TODO - this will need a different DTO object.
-    questionsDAO.sayHi();
+//    questionsDAO.sayHi();
     return null;
 //    return new QuestionDTO(id, "example title", "example desc", LocalDateTime.now());
   }

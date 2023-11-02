@@ -20,4 +20,32 @@ public class Question {
     this.numberOfViews = numberOfViews;
     this.userId = userId;
   }
+
+  public int getId() {
+    return id;
+  }
+
+  public String getTitle() {
+    return title;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public LocalDateTime getCreatedAt() {
+    return createdAt;
+  }
+
+  public int getNumberOfAnswers() {
+    return numberOfAnswers;
+  }
+
+  public int getNumberOfViews() {
+    return numberOfViews;
+  }
+
+  public int getUserId() {
+    return userId;
+  }
 }

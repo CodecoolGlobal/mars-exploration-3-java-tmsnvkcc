@@ -1,6 +1,6 @@
 package com.codecool.stackoverflowtw.dao;
 
-import com.codecool.stackoverflowtw.dao.model.Question;
+import com.codecool.stackoverflowtw.dao.model.User;
 import com.codecool.stackoverflowtw.logger.Logger;
 import com.codecool.stackoverflowtw.postgresDb.PsqlConnector;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,31 +11,30 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class QuestionsDaoJdbc implements QuestionsDAO {
+public class UserDAOJdbc implements UserDAO {
   private PsqlConnector psqlConnector;
   private Logger logger;
 
   @Autowired
-  public QuestionsDaoJdbc(PsqlConnector psqlConnector, Logger logger) {
+  public UserDAOJdbc(PsqlConnector psqlConnector, Logger logger) {
     this.psqlConnector = psqlConnector;
     this.logger = logger;
   }
 
   @Override
-  public List<Question> getAll() {
-    List<Question> questions = new ArrayList<>();
+  public List<User> getAll() {
+    List<User> users = new ArrayList<>();
 
     String sql =
       """
         SELECT
           *
         FROM
-          questions;
+          users;
       """;
 
     try (
@@ -45,20 +44,17 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
 
       while (rs.next()) {
         int id = rs.getInt(1);
-        String title = rs.getString(2);
-        String description = rs.getString(3);
-        LocalDateTime date = rs.getTimestamp(4).toLocalDateTime();
-        int numberOfAnswers = rs.getInt(5);
-        int numberOfViews = rs.getInt(6);
-        int userId = rs.getInt(7);
+        String userName = rs.getString(2);
+        String password = rs.getString(3);
+        String email = rs.getString(4);
 
-        questions.add(new Question(id, title, description, date, numberOfAnswers, numberOfViews, userId));
+        users.add(new User(id, userName, password, email));
       }
     } catch (SQLException exception) {
       logger.logError(exception.getMessage());
     }
 
 
-    return questions;
+    return users;
   }
 }
