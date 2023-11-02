@@ -1,6 +1,7 @@
 package com.codecool.stackoverflowtw.controller;
 
 import com.codecool.stackoverflowtw.controller.dto.NewQuestionDTO;
+import com.codecool.stackoverflowtw.controller.dto.QuestionsForAllQuestionsPageDTO;
 import com.codecool.stackoverflowtw.controller.dto.QuestionForHomePageListDTO;
 import com.codecool.stackoverflowtw.logger.Logger;
 import com.codecool.stackoverflowtw.service.QuestionService;
@@ -24,12 +25,12 @@ public class QuestionController {
     }
 
     @GetMapping("/all")
-    public List<QuestionForHomePageListDTO> getAllQuestions() {
+    public List<QuestionsForAllQuestionsPageDTO> getAllQuestions() {
         return questionService.getAllQuestions();
     }
 
     @GetMapping("/{id}")
-    public QuestionForHomePageListDTO getQuestionById(@PathVariable int id) {
+    public QuestionsForAllQuestionsPageDTO getQuestionById(@PathVariable int id) {
         return null;
     }
 

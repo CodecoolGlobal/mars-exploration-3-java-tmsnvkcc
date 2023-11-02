@@ -15,8 +15,6 @@ public class StackoverflowTwApplication {
         SpringApplication.run(StackoverflowTwApplication.class, args);
     }
 
-
-
     @Bean
     Logger getLogger() {
         return new ConsoleLogger();
