@@ -18,11 +18,6 @@ public class StackoverflowTwApplication {
   }
 
   @Bean
-  public UserDAO usersDAO() {
-    return new UserDAOJdbc();
-  }
-
-  @Bean
   Logger getLogger() {
     return new ConsoleLogger();
   }

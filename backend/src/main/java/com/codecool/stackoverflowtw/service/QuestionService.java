@@ -3,23 +3,28 @@ package com.codecool.stackoverflowtw.service;
 import com.codecool.stackoverflowtw.dao.QuestionsDAO;
 import com.codecool.stackoverflowtw.controller.dto.NewQuestionDTO;
 import com.codecool.stackoverflowtw.controller.dto.QuestionsForAllQuestionsPageDTO;
+import com.codecool.stackoverflowtw.dao.UserDAO;
 import com.codecool.stackoverflowtw.dao.model.Question;
+import com.codecool.stackoverflowtw.dao.model.User;
 import com.codecool.stackoverflowtw.logger.Logger;
-import com.codecool.stackoverflowtw.postgresDb.PsqlConnector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class QuestionService {
   private QuestionsDAO questionsDAOJdbc;
+  private UserDAO userDAOJdbc;
   private Logger logger;
 
   @Autowired
-  public QuestionService(QuestionsDAO questionsDAOJdbc, Logger logger) {
+  public QuestionService(QuestionsDAO questionsDAOJdbc, UserDAO userDAOJdbc, Logger logger) {
     this.questionsDAOJdbc = questionsDAOJdbc;
+    this.userDAOJdbc = userDAOJdbc;
     this.logger = logger;
   }
 
@@ -27,38 +32,18 @@ public class QuestionService {
     List<QuestionsForAllQuestionsPageDTO> questions = new ArrayList<>();
 
     List<Question> questionsDAO = questionsDAOJdbc.getAll();
-//    String sql =
-//      """
-//        SELECT
-//          questions.id,
-//          users.username,
-//          questions.title,
-//          questions.numberofanswers,
-//          questions.numberofviews,
-//          questions.createdat
-//        FROM
-//          questions
-//        INNER JOIN users ON questions.userid = users.id;
-//      """;
+    List<User> usersDAO = userDAOJdbc.getAll();
 
-//    try (
-//      Connection conn = psqlConnector.getConnection();
-//      Statement stmt = conn.createStatement();// prepared statements
-//      ResultSet rs = stmt.executeQuery(sql)) {
-//
-//      while (rs.next()) {
-//        int id = rs.getInt(1);
-//        String userName = rs.getString(2);
-//        String title = rs.getString(3);
-//        int numberOfAnswers = rs.getInt(4);
-//        int numberOfViews = rs.getInt(5);
-//        LocalDateTime date = rs.getTimestamp(6).toLocalDateTime();
-//
-//        questions.add(new QuestionsForAllQuestionsPageDTO(id, userName, title, numberOfAnswers, numberOfViews, date));
-//      }
-//    } catch (SQLException exception) {
-//      logger.logError(exception.getMessage());
-//    }
+    for (Question question : questionsDAO) {
+      int id = question.getId();
+      String title = question.getTitle();
+      int numberOfAnswers = question.getNumberOfAnswers();
+      int numberOfViews = question.getNumberOfViews();
+      LocalDateTime createdAt = question.getCreatedAt();
+      String userName = usersDAO.stream().filter(user -> user.getId() == question.getUserId()).collect(Collectors.toList()).get(0).getUsername();
+
+      questions.add(new QuestionsForAllQuestionsPageDTO(id, userName, title, numberOfAnswers, numberOfViews, createdAt));
+    }
 
     return questions;
   }
