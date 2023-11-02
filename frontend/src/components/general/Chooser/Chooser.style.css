@@ -1,0 +1,38 @@
+.home-chooser-box {
+    background-color: lightgray;
+    position: relative;
+    width: 40rem;
+    height: 40rem;
+    margin: auto;
+    /*border: 3px solid transparent;
+    border-radius: 4px;*/
+
+    & .to-questions img, & .ask-a-question img {
+        position: absolute;
+        width: 100%;
+        filter: grayscale(90%);
+        filter: contrast(75%) !important;
+        filter: blur(1px);
+        transition: .1s linear;
+    }
+
+    & .to-questions img {
+        clip-path: polygon(100% 0, 0 0, 0 100%) !important;
+    }
+
+    & .ask-a-question img {
+        clip-path: polygon(100% 0, 100% 100%, 0 100%) !important;
+    }
+
+    & .to-questions img:hover, .ask-a-question img:hover {
+        border-radius: 4px;
+        cursor: pointer;
+        filter: grayscale(50%);
+        filter: contrast(100%) !important;
+        filter: blur(0px);
+        transform: scale(1.05);
+        transition: .1s linear;
+        /*border: 3px solid black;*/
+    }
+}
+
