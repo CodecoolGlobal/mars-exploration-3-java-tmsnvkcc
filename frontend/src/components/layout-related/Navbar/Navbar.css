@@ -1,25 +1,28 @@
 nav {
-    background-color: whitesmoke;
-    color: black;
-}
+  height: 10rem;
+  background-color: whitesmoke;
+  color: black;
 
-ul {
+  & ul {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: center;
-}
+  }
 
-li {
+  & li {
     display: inline-block;
-    margin: 1rem;
-}
+    margin: 2.5rem 2.5rem 0 2.5rem;
+  }
 
-a {
-    text-decoration: none;
+  & a {
     font-weight: bold;
-}
-a:hover {
-    text-decoration: underline;
-}
+    font-size: 2.5rem;
+    color: inherit;
+  }
 
+  & a:hover {
+    text-decoration: underline;
+    color: var(--secondary-main);
+  }
+}
