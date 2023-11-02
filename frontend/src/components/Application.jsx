@@ -9,7 +9,7 @@ import {
   ErrorPagePage,
   HomePage,
   QuestionsPage,
-  IndividualQuestionPage
+  IndividualQuestionPage,
 } from 'pages';
 import { Layout } from 'components/layout-related';
 import '../index.css';

@@ -1,6 +1,7 @@
 package com.codecool.stackoverflowtw.controller;
 
 import com.codecool.stackoverflowtw.controller.dto.AnswerPopularityCountDTO;
+import com.codecool.stackoverflowtw.controller.dto.NewAnswerDTO;
 import com.codecool.stackoverflowtw.controller.dto.NewQuestionDTO;
 import com.codecool.stackoverflowtw.controller.dto.QuestionsForAllQuestionsPageDTO;
 import com.codecool.stackoverflowtw.logger.Logger;
@@ -82,6 +83,17 @@ public class QuestionController {
   public ResponseEntity<Object> updateDislikeCount(@PathVariable int id) {
     try {
       questionService.updateDislikeCount(id);
+      return new ResponseEntity<>(HttpStatus.OK);
+    } catch (Exception exception) {
+      return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+    }
+  }
+
+  @PostMapping("/add-new-answer")
+  public ResponseEntity<Object> postAnswer(@RequestBody NewAnswerDTO answer) {
+    try {
+      questionService.addAnswer(answer);
+      logger.logInfo("New answer added!");
       return new ResponseEntity<>(HttpStatus.OK);
     } catch (Exception exception) {
       return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);

@@ -1,6 +1,6 @@
 import {
-  useHandleLikeCountUpdate
-} from "./AnswerBox.hooks";
+  useHandleLikeCountUpdate,
+} from './AnswerBox.hooks';
 import './AnswerBox.styles.css';
 
 const AnswerBox = ({ data }) => {
