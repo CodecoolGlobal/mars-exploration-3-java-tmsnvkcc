@@ -1,5 +1,6 @@
 package com.codecool.stackoverflowtw.dao;
 
+import com.codecool.stackoverflowtw.dao.model.Answer;
 import com.codecool.stackoverflowtw.dao.model.Question;
 import com.codecool.stackoverflowtw.logger.Logger;
 import com.codecool.stackoverflowtw.postgresDb.PsqlConnector;
@@ -15,48 +16,51 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class QuestionsDaoJdbc implements QuestionsDAO {
+public class AnswersDAOJdbc implements AnswersDAO {
   private PsqlConnector psqlConnector;
   private Logger logger;
 
   @Autowired
-  public QuestionsDaoJdbc(PsqlConnector psqlConnector, Logger logger) {
+  public AnswersDAOJdbc(PsqlConnector psqlConnector, Logger logger) {
     this.psqlConnector = psqlConnector;
     this.logger = logger;
   }
 
   @Override
-  public List<Question> getAll() {
-    List<Question> questions = new ArrayList<>();
+  public List<Answer> getAnswersByQuestionId(int questionId) {
+    List<Answer> answers = new ArrayList<>();
 
     String sql =
       """
         SELECT
           *
         FROM
-          questions;
+          answers
+        WHERE
+          questionid = ?;
       """;
 
     try (
       Connection conn = psqlConnector.getConnection();
-      PreparedStatement pstmt = conn.prepareStatement(sql);
-      ResultSet rs = pstmt.executeQuery()) {
+      PreparedStatement pstmt = conn.prepareStatement(sql)) {
+      pstmt.setInt(1, questionId);
+      ResultSet rs = pstmt.executeQuery();
 
       while (rs.next()) {
         int id = rs.getInt(1);
-        String title = rs.getString(2);
-        String description = rs.getString(3);
+        String description = rs.getString(2);
+        int questionid = rs.getInt(3);
         LocalDateTime date = rs.getTimestamp(4).toLocalDateTime();
-        int numberOfAnswers = rs.getInt(5);
-        int numberOfViews = rs.getInt(6);
+        int numberOfLikes = rs.getInt(5);
+        int numberOfDislikes = rs.getInt(6);
         int userId = rs.getInt(7);
 
-        questions.add(new Question(id, title, description, date, numberOfAnswers, numberOfViews, userId));
+        answers.add(new Answer(id, description, questionid, date, numberOfLikes, numberOfDislikes, userId));
       }
     } catch (SQLException exception) {
       logger.logError(exception.getMessage());
     }
 
-    return questions;
+    return answers;
   }
 }
