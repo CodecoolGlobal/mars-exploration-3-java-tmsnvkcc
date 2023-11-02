@@ -2,6 +2,7 @@ package com.codecool.stackoverflowtw.service;
 
 import com.codecool.stackoverflowtw.controller.dto.AnswerForSingleQuestionDTO;
 import com.codecool.stackoverflowtw.controller.dto.AnswerPopularityCountDTO;
+import com.codecool.stackoverflowtw.controller.dto.NewAnswerDTO;
 import com.codecool.stackoverflowtw.controller.dto.SingleQuestionDTO;
 import com.codecool.stackoverflowtw.dao.AnswersDAO;
 import com.codecool.stackoverflowtw.dao.QuestionsDAO;
@@ -135,5 +136,9 @@ public class QuestionService {
   public void updateDislikeCount(int id) {
     Answer answerDAO = answersDAOJdbc.getAnswerById(id);
     answersDAOJdbc.updateDislikeCountById(id, answerDAO.getNumberOfDislikes() + 1);
+  }
+
+  public void addAnswer(NewAnswerDTO answer) {
+    answersDAOJdbc.add(answer.questionId(), answer.newAnswer());
   }
 }

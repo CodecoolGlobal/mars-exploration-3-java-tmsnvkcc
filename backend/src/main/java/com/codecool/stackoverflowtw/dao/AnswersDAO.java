@@ -9,4 +9,5 @@ public interface AnswersDAO {
   Answer getAnswerById(int answerId);
   void updateLikeCountById(int answerId, int newValue);
   void updateDislikeCountById(int answerId, int newValue);
+  void add(int questionId, String body);
 }
