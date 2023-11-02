@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,8 +40,8 @@ public class QuestionService {
   public List<QuestionsForAllQuestionsPageDTO> getAllQuestions() {
     List<QuestionsForAllQuestionsPageDTO> questions = new ArrayList<>();
 
-      List<Question> questionsDAO = questionsDAOJdbc.getAll();
-      List<User> usersDAO = userDAOJdbc.getAll();
+    List<Question> questionsDAO = questionsDAOJdbc.getAll();
+    List<User> usersDAO = userDAOJdbc.getAll();
 
     for (Question question : questionsDAO) {
       int id = question.getId();
@@ -56,7 +57,11 @@ public class QuestionService {
       questions.add(new QuestionsForAllQuestionsPageDTO(id, userName, title, numberOfAnswers, numberOfViews, createdAt));
     }
 
-    return questions;
+    List<QuestionsForAllQuestionsPageDTO> orderedQuestions = questions.stream()
+      .sorted(Comparator.comparing(QuestionsForAllQuestionsPageDTO::id))
+      .collect(Collectors.toList());
+
+    return orderedQuestions;
   }
 
   public SingleQuestionDTO getQuestionById(int id) {
