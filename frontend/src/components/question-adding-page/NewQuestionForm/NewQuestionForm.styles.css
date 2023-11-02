@@ -1,0 +1,50 @@
+.new-question-form {
+    padding: 2rem;
+    border: 1px solid #ccc;
+    border-radius: 1.5rem;
+    margin: auto;
+    width: 50%;
+    box-shadow: 3px 3px 5px lightgray;
+
+    & label {
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    & textarea {
+        resize: vertical;
+    }
+
+    & input, & textarea {
+        display: inline-block;
+        padding: 1rem;
+        width: 100%;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-bottom: 2rem;
+    }
+
+    & hr {
+        display: block;
+        height: 1px;
+        margin: auto auto 2rem auto;
+        background-color: #ccc;
+        width: 80% !important;
+    }
+
+    & button {
+        width: 40%;
+        background-color: #4CAF50;
+        display: block;
+        margin: auto;
+        color: white;
+        padding: 1rem;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    & button:hover {
+        background-color: #45A049;
+    }
+}

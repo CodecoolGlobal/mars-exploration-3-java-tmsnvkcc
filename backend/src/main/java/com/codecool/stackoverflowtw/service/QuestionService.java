@@ -11,6 +11,7 @@ import com.codecool.stackoverflowtw.dao.model.Answer;
 import com.codecool.stackoverflowtw.dao.model.Question;
 import com.codecool.stackoverflowtw.dao.model.User;
 import com.codecool.stackoverflowtw.logger.Logger;
+import com.codecool.stackoverflowtw.postgresDb.PsqlConnector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,24 +22,24 @@ import java.util.stream.Collectors;
 
 @Service
 public class QuestionService {
-  private QuestionsDAO questionsDAOJdbc;
-  private UserDAO userDAOJdbc;
-  private AnswersDAO answersDAOJdbc;
-  private Logger logger;
+  public static final int NUMBER_OF_ANSWERS = 0;
+  public static final int NUMBER_OF_VIEWS = 0;
+  private final QuestionsDAO questionsDAOJdbc;
+  private final UserDAO userDAOJdbc;
+  private final Logger logger;
 
   @Autowired
-  public QuestionService(QuestionsDAO questionsDAOJdbc, UserDAO userDAOJdbc, AnswersDAO answersDAOJdbc, Logger logger) {
-    this.questionsDAOJdbc = questionsDAOJdbc;
-    this.userDAOJdbc = userDAOJdbc;
-    this.answersDAOJdbc = answersDAOJdbc;
-    this.logger = logger;
+  public QuestionService(QuestionsDAO questionsDAOJdbc, UserDAO userDAOJdbc, Logger logger) {
+      this.questionsDAOJdbc = questionsDAOJdbc;
+      this.userDAOJdbc = userDAOJdbc;
+      this.logger = logger;
   }
 
   public List<QuestionsForAllQuestionsPageDTO> getAllQuestions() {
     List<QuestionsForAllQuestionsPageDTO> questions = new ArrayList<>();
 
-    List<Question> questionsDAO = questionsDAOJdbc.getAll();
-    List<User> usersDAO = userDAOJdbc.getAll();
+      List<Question> questionsDAO = questionsDAOJdbc.getAll();
+      List<User> usersDAO = userDAOJdbc.getAll();
 
     for (Question question : questionsDAO) {
       int id = question.getId();
@@ -102,9 +103,7 @@ public class QuestionService {
     return false;
   }
 
-  public int addNewQuestion(NewQuestionDTO question) {
-    // TODO
-    int createdId = 0;
-    return createdId;
+  public void addNewQuestion(NewQuestionDTO question) {
+    questionsDAOJdbc.add(question.title(), question.description(), NUMBER_OF_ANSWERS, NUMBER_OF_VIEWS);
   }
 }
