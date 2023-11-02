@@ -1,7 +1,7 @@
 import {
   useEffect,
-  useState
-} from "react";
+  useState,
+} from 'react';
 
 const useHandleLikeCountUpdate = (answerId) => {
   const [likeCount, setLikeCount] = useState(0);
@@ -11,7 +11,7 @@ const useHandleLikeCountUpdate = (answerId) => {
   const updateLikeCount = async () => {
     try {
       await fetch(`/questions/update-likes/${answerId}`, {
-        method: 'PATCH'
+        method: 'PATCH',
       });
       setToggle(!toggle);
     } catch (error) {
@@ -22,7 +22,7 @@ const useHandleLikeCountUpdate = (answerId) => {
   const updateDislikeCount = async () => {
     try {
       await fetch(`/questions/update-dislikes/${answerId}`, {
-        method: 'PATCH'
+        method: 'PATCH',
       });
       setToggle(!toggle);
     } catch (error) {
@@ -34,9 +34,10 @@ const useHandleLikeCountUpdate = (answerId) => {
     const getPopularityCounts = async () => {
       try {
         const response = await fetch(`/questions/popularity-count/${answerId}`, {
-          method: 'GET'
+          method: 'GET',
         });
         const data = await response.json();
+
         setLikeCount(data.numberOfLikes);
         setDislikeCount(data.numberOfDislikes);
       } catch (error) {
@@ -51,10 +52,10 @@ const useHandleLikeCountUpdate = (answerId) => {
     likeCount,
     disLikeCount,
     updateLikeCount,
-    updateDislikeCount
+    updateDislikeCount,
   };
 };
 
 export {
   useHandleLikeCountUpdate,
-}
+};

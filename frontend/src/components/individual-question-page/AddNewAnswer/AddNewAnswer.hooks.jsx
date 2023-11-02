@@ -6,6 +6,7 @@ const useHandleNewAnswerSubmission = () => {
 
     try {
       const payload = serialiseFormData(event.target);
+      console.log(payload)
       await fetch('/questions/add-new-answer', {
         method: 'POST',
         headers: {
@@ -15,14 +16,14 @@ const useHandleNewAnswerSubmission = () => {
         body: JSON.stringify(payload),
       });
 
-      window.location.reload();
+      // window.location.reload();
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   return {
-    submitAnswer
+    submitAnswer,
   };
 };
 

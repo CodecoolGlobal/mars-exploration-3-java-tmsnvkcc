@@ -1,4 +1,4 @@
-import serialiseFormData from "./serialiseFormData";
+import serialiseFormData from './serialiseFormData';
 
 export {
   serialiseFormData,

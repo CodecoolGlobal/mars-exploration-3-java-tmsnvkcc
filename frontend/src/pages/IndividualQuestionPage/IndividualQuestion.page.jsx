@@ -1,11 +1,11 @@
 import {
+  AddNewAnswer,
   AnswerBox,
   QuestionBox,
-  AddNewAnswer
 } from 'components/individual-question-page';
 import {
   useHandleQuestionDetailsLoader,
-  useHandleViewCountUpdate
+  useHandleViewCountUpdate,
 } from './IndividualQuestionPage.hooks';
 import './IndividualQuestionPage.styles.css';
 
