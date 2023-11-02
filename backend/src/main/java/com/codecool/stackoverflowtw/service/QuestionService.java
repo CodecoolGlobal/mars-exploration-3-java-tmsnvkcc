@@ -1,6 +1,7 @@
 package com.codecool.stackoverflowtw.service;
 
 import com.codecool.stackoverflowtw.controller.dto.AnswerForSingleQuestionDTO;
+import com.codecool.stackoverflowtw.controller.dto.AnswerPopularityCountDTO;
 import com.codecool.stackoverflowtw.controller.dto.SingleQuestionDTO;
 import com.codecool.stackoverflowtw.dao.AnswersDAO;
 import com.codecool.stackoverflowtw.dao.QuestionsDAO;
@@ -11,12 +12,12 @@ import com.codecool.stackoverflowtw.dao.model.Answer;
 import com.codecool.stackoverflowtw.dao.model.Question;
 import com.codecool.stackoverflowtw.dao.model.User;
 import com.codecool.stackoverflowtw.logger.Logger;
-import com.codecool.stackoverflowtw.postgresDb.PsqlConnector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,8 +41,8 @@ public class QuestionService {
   public List<QuestionsForAllQuestionsPageDTO> getAllQuestions() {
     List<QuestionsForAllQuestionsPageDTO> questions = new ArrayList<>();
 
-      List<Question> questionsDAO = questionsDAOJdbc.getAll();
-      List<User> usersDAO = userDAOJdbc.getAll();
+    List<Question> questionsDAO = questionsDAOJdbc.getAll();
+    List<User> usersDAO = userDAOJdbc.getAll();
 
     for (Question question : questionsDAO) {
       int id = question.getId();
@@ -57,7 +58,11 @@ public class QuestionService {
       questions.add(new QuestionsForAllQuestionsPageDTO(id, userName, title, numberOfAnswers, numberOfViews, createdAt));
     }
 
-    return questions;
+    List<QuestionsForAllQuestionsPageDTO> orderedQuestions = questions.stream()
+      .sorted(Comparator.comparing(QuestionsForAllQuestionsPageDTO::id))
+      .collect(Collectors.toList());
+
+    return orderedQuestions;
   }
 
   public SingleQuestionDTO getQuestionById(int id) {
@@ -107,5 +112,28 @@ public class QuestionService {
 
   public void addNewQuestion(NewQuestionDTO question) {
     questionsDAOJdbc.add(question.title(), question.description(), NUMBER_OF_ANSWERS, NUMBER_OF_VIEWS);
+  }
+
+  public void increaseViewCount(int id, int currentViews) {
+    questionsDAOJdbc.increaseViewCount(id, currentViews);
+  }
+
+  public AnswerPopularityCountDTO getPopularityCounts(int id) {
+    AnswerPopularityCountDTO answer;
+
+    Answer answerDAO = answersDAOJdbc.getAnswerById(id);
+    answer = new AnswerPopularityCountDTO(answerDAO.getNumberOfLikes(), answerDAO.getNumberOfDislikes());
+
+    return answer;
+  }
+
+  public void updateLikeCount(int id) {
+    Answer answerDAO = answersDAOJdbc.getAnswerById(id);
+    answersDAOJdbc.updateLikeCountById(id, answerDAO.getNumberOfLikes() + 1);
+  }
+
+  public void updateDislikeCount(int id) {
+    Answer answerDAO = answersDAOJdbc.getAnswerById(id);
+    answersDAOJdbc.updateDislikeCountById(id, answerDAO.getNumberOfDislikes() + 1);
   }
 }
