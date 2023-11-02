@@ -25,12 +25,14 @@ public class QuestionService {
   public static final int NUMBER_OF_ANSWERS = 0;
   public static final int NUMBER_OF_VIEWS = 0;
   private final QuestionsDAO questionsDAOJdbc;
+  private final AnswersDAO answersDAOJdbc;
   private final UserDAO userDAOJdbc;
   private final Logger logger;
 
   @Autowired
-  public QuestionService(QuestionsDAO questionsDAOJdbc, UserDAO userDAOJdbc, Logger logger) {
+  public QuestionService(QuestionsDAO questionsDAOJdbc, AnswersDAO answersDAOJdbc, UserDAO userDAOJdbc, Logger logger) {
       this.questionsDAOJdbc = questionsDAOJdbc;
+      this.answersDAOJdbc = answersDAOJdbc;
       this.userDAOJdbc = userDAOJdbc;
       this.logger = logger;
   }

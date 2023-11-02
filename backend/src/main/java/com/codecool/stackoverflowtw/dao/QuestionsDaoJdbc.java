@@ -65,7 +65,7 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
 
 
     @Override
-    public void add(String title, String description,int numberOfAnswers, int numberOfViews){
+    public void add(String title, String description,int numberOfAnswers, int numberOfViews) {
         int userId = 1;
         String query = "INSERT INTO questions(title, description, numberOfAnswers, numberOfViews, userid) VALUES(?,?,?,?,?)";
 
@@ -86,8 +86,5 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
             logger.logError("Error adding new question: " + e.getMessage());
         }
     }
-
-    return questions;
-  }
 
 }
