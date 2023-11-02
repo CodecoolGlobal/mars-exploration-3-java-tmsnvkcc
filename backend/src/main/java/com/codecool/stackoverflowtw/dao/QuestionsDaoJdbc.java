@@ -16,8 +16,8 @@ import java.util.List;
 
 @Repository
 public class QuestionsDaoJdbc implements QuestionsDAO {
-    private PsqlConnector psqlConnector;
-    private Logger logger;
+    private final PsqlConnector psqlConnector;
+    private final Logger logger;
 
     @Autowired
     public QuestionsDaoJdbc(PsqlConnector psqlConnector, Logger logger) {
@@ -63,28 +63,26 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
         return questions;
     }
 
-        @Override
-        public void add (String title, String description,int numberOfLikes, int numberOfViews){
-            int userId = 1;
-            String query = "INSERT INTO questions(title, description, numberOfAnswers, numberOfViews, userid) VALUES(?,?,?,?,?)";
+    @Override
+    public void add(String title, String description,int numberOfAnswers, int numberOfViews){
+        int userId = 1;
+        String query = "INSERT INTO questions(title, description, numberOfAnswers, numberOfViews, userid) VALUES(?,?,?,?,?)";
 
-            try (Connection conn = getConnection()) {
-                PreparedStatement preparedStatement = conn.prepareStatement(query);
-                preparedStatement.setString(1, title);
-                preparedStatement.setString(2, description);
-                preparedStatement.setInt(3, numberOfLikes);
-                preparedStatement.setInt(4, numberOfViews);
-                preparedStatement.setInt(5, userId);
+        try (Connection conn = getConnection()) {
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setString(1, title);
+            preparedStatement.setString(2, description);
+            preparedStatement.setInt(3, numberOfAnswers);
+            preparedStatement.setInt(4, numberOfViews);
+            preparedStatement.setInt(5, userId);
 
-                preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
 
-                logger.logInfo("Adding a new question was successfull!");
+            logger.logInfo("New question added successfully!");
 
-                preparedStatement.close();
-            } catch (SQLException e) {
-                logger.logError("Error adding new question: " + e.getMessage());
-            }
+            preparedStatement.close();
+        } catch (SQLException e) {
+            logger.logError("Error adding new question: " + e.getMessage());
         }
-
-
     }
+}

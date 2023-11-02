@@ -18,19 +18,17 @@ import java.util.stream.Collectors;
 
 @Service
 public class QuestionService {
-    public static final int NUMBER_OF_LIKES = 0;
-    public static final int NUMBER_OF_VIEWS = 0;
-    private final PsqlConnector psqlConnector;
+  public static final int NUMBER_OF_ANSWERS = 0;
+  public static final int NUMBER_OF_VIEWS = 0;
   private final QuestionsDAO questionsDAOJdbc;
   private final UserDAO userDAOJdbc;
   private final Logger logger;
 
   @Autowired
-  public QuestionService(PsqlConnector psqlConnector, QuestionsDAO questionsDAOJdbc, UserDAO userDAOJdbc, Logger logger) {
-      this.psqlConnector = psqlConnector;
+  public QuestionService(QuestionsDAO questionsDAOJdbc, UserDAO userDAOJdbc, Logger logger) {
       this.questionsDAOJdbc = questionsDAOJdbc;
-    this.userDAOJdbc = userDAOJdbc;
-    this.logger = logger;
+      this.userDAOJdbc = userDAOJdbc;
+      this.logger = logger;
   }
 
   public List<QuestionsForAllQuestionsPageDTO> getAllQuestions() {
@@ -69,10 +67,6 @@ public class QuestionService {
   }
 
   public void addNewQuestion(NewQuestionDTO question) {
-    int createdId = 0;
-    // TODO
-
-    questionsDAOJdbc.add(question.title(), question.description(), NUMBER_OF_LIKES, NUMBER_OF_VIEWS);
-
+    questionsDAOJdbc.add(question.title(), question.description(), NUMBER_OF_ANSWERS, NUMBER_OF_VIEWS);
   }
 }
