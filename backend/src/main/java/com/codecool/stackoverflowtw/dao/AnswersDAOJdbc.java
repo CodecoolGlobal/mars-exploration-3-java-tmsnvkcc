@@ -25,6 +25,10 @@ public class AnswersDAOJdbc implements AnswersDAO {
     this.logger = logger;
   }
 
+  private Connection getConnection() {
+    return psqlConnector.getConnection();
+  }
+
   @Override
   public List<Answer> getAnswersByQuestionId(int questionId) {
     List<Answer> answers = new ArrayList<>();
@@ -40,7 +44,7 @@ public class AnswersDAOJdbc implements AnswersDAO {
       """;
 
     try (
-      Connection conn = psqlConnector.getConnection();
+      Connection conn = getConnection();
       PreparedStatement pstmt = conn.prepareStatement(sql)) {
       pstmt.setInt(1, questionId);
       ResultSet rs = pstmt.executeQuery();
@@ -61,5 +65,89 @@ public class AnswersDAOJdbc implements AnswersDAO {
     }
 
     return answers;
+  }
+
+  @Override
+  public Answer getAnswerById(int answerId) {
+    Answer answer = null;
+
+    String sql =
+      """
+        SELECT
+          *
+        FROM
+          answers
+        WHERE
+          id = ?;
+      """;
+
+    try (
+      Connection conn = getConnection();
+      PreparedStatement pstmt = conn.prepareStatement(sql)) {
+      pstmt.setInt(1, answerId);
+      ResultSet rs = pstmt.executeQuery();
+
+      while (rs.next()) {
+        int id = rs.getInt(1);
+        String description = rs.getString(2);
+        int questionid = rs.getInt(3);
+        LocalDateTime date = rs.getTimestamp(4).toLocalDateTime();
+        int numberOfLikes = rs.getInt(5);
+        int numberOfDislikes = rs.getInt(6);
+        int userId = rs.getInt(7);
+
+        answer = new Answer(id, description, questionid, date, numberOfLikes, numberOfDislikes, userId);
+      }
+    } catch (SQLException exception) {
+      logger.logError(exception.getMessage());
+    }
+
+    return answer;
+  }
+
+  @Override
+  public void updateLikeCountById(int answerId, int newValue) {
+    String sql =
+      """
+        UPDATE
+          answers
+        SET
+          numberoflikes = ?
+        WHERE
+          id = ?
+      """;
+
+    try (
+      Connection conn = getConnection();
+      PreparedStatement pstmt = conn.prepareStatement(sql)) {
+      pstmt.setInt(1, newValue);
+      pstmt.setInt(2, answerId);
+      pstmt.executeQuery();
+    } catch (SQLException exception) {
+      logger.logError(exception.getMessage());
+    }
+  }
+
+  @Override
+  public void updateDislikeCountById(int answerId, int newValue) {
+    String sql =
+      """
+        UPDATE
+          answers
+        SET
+          numberofdislikes = ?
+        WHERE
+          id = ?
+      """;
+
+    try (
+      Connection conn = getConnection();
+      PreparedStatement pstmt = conn.prepareStatement(sql)) {
+      pstmt.setInt(1, newValue);
+      pstmt.setInt(2, answerId);
+      pstmt.executeQuery();
+    } catch (SQLException exception) {
+      logger.logError(exception.getMessage());
+    }
   }
 }
