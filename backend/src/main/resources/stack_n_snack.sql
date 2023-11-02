@@ -89,3 +89,5 @@ CREATE TABLE answers_questions_reference (
 
 INSERT INTO users(username, password, email) VALUES ('admin', '123', 'admin@admin.com');
 INSERT INTO questions(title, description, numberOfAnswers, numberOfViews, userId) VALUES ('Where is my phone?', 'I lost my phone a few minutes ago and I can''t find it :(', 2, 41, 1);
+INSERT INTO answers(id, description, questionid, createdAt, numberOfLikes, numberOfDislikes, userId) VALUES
+(1, 'This is the answer!', 1, Now(), 3, 4, 1);
