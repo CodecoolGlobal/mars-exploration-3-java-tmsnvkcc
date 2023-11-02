@@ -71,7 +71,8 @@ public class QuestionService {
   public void addNewQuestion(NewQuestionDTO question) {
     int createdId = 0;
     // TODO
-    questionsDAO.add(question.title(), question.description(), NUMBER_OF_LIKES, NUMBER_OF_VIEWS);
+
+    questionsDAOJdbc.add(question.title(), question.description(), NUMBER_OF_LIKES, NUMBER_OF_VIEWS);
 
   }
 }

@@ -2,7 +2,6 @@ package com.codecool.stackoverflowtw.controller;
 
 import com.codecool.stackoverflowtw.controller.dto.NewQuestionDTO;
 import com.codecool.stackoverflowtw.controller.dto.QuestionsForAllQuestionsPageDTO;
-import com.codecool.stackoverflowtw.controller.dto.QuestionForHomePageListDTO;
 import com.codecool.stackoverflowtw.logger.Logger;
 import com.codecool.stackoverflowtw.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
