@@ -2,11 +2,15 @@ import {
   AnswerBox,
   QuestionBox
 } from 'components/individual-question-page';
-import useHandleQuestionDetailsLoader from './IndividualQuestionPage.hooks';
+import {
+  useHandleQuestionDetailsLoader,
+  useHandleViewCountUpdate
+} from './IndividualQuestionPage.hooks';
 import './IndividualQuestionPage.styles.css';
 
 const IndividualQuestionPage = () => {
   const { loading, data } = useHandleQuestionDetailsLoader();
+  useHandleViewCountUpdate();
 
   if (loading) {
     return (

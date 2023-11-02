@@ -16,75 +16,97 @@ import java.util.List;
 
 @Repository
 public class QuestionsDaoJdbc implements QuestionsDAO {
-    private final PsqlConnector psqlConnector;
-    private final Logger logger;
+  private final PsqlConnector psqlConnector;
+  private final Logger logger;
 
-    @Autowired
-    public QuestionsDaoJdbc(PsqlConnector psqlConnector, Logger logger) {
-        this.psqlConnector = psqlConnector;
-        this.logger = logger;
+  @Autowired
+  public QuestionsDaoJdbc(PsqlConnector psqlConnector, Logger logger) {
+    this.psqlConnector = psqlConnector;
+    this.logger = logger;
+  }
+
+  private Connection getConnection() {
+    return psqlConnector.getConnection();
+  }
+
+  @Override
+  public List<Question> getAll() {
+    List<Question> questions = new ArrayList<>();
+
+    String sql =
+      """
+           SELECT
+             *
+           FROM
+             questions;
+        """;
+
+    try (
+      Connection conn = getConnection();
+      PreparedStatement pstmt = conn.prepareStatement(sql);
+      ResultSet rs = pstmt.executeQuery()) {
+
+      while (rs.next()) {
+        int id = rs.getInt(1);
+        String title = rs.getString(2);
+        String description = rs.getString(3);
+        LocalDateTime date = rs.getTimestamp(4)
+                               .toLocalDateTime();
+        int numberOfAnswers = rs.getInt(5);
+        int numberOfViews = rs.getInt(6);
+        int userId = rs.getInt(7);
+
+        questions.add(new Question(id, title, description, date, numberOfAnswers, numberOfViews, userId));
+      }
+    } catch (SQLException exception) {
+      logger.logError(exception.getMessage());
     }
+    return questions;
+  }
 
-    private Connection getConnection() {
-        return psqlConnector.getConnection();
+
+  @Override
+  public void add(String title, String description, int numberOfAnswers, int numberOfViews) {
+    int userId = 1;
+    String query = "INSERT INTO questions(title, description, numberOfAnswers, numberOfViews, userid) VALUES(?,?,?,?,?)";
+
+    try (Connection conn = getConnection()) {
+      PreparedStatement preparedStatement = conn.prepareStatement(query);
+      preparedStatement.setString(1, title);
+      preparedStatement.setString(2, description);
+      preparedStatement.setInt(3, numberOfAnswers);
+      preparedStatement.setInt(4, numberOfViews);
+      preparedStatement.setInt(5, userId);
+
+      preparedStatement.executeUpdate();
+
+      logger.logInfo("New question added successfully!");
+
+      preparedStatement.close();
+    } catch (SQLException e) {
+      logger.logError("Error adding new question: " + e.getMessage());
     }
+  }
 
-    @Override
-    public List<Question> getAll() {
-        List<Question> questions = new ArrayList<>();
+  @Override
+  public void increaseViewCount(int id, int currentViews) {
+    String sql =
+      """
+        UPDATE
+          questions
+        SET
+          numberofviews = ?
+        WHERE
+          id = ?
+      """;
 
-        String sql =
-                """
-                          SELECT
-                            *
-                          FROM
-                            questions;
-                        """;
-
-        try (
-                Connection conn = psqlConnector.getConnection();
-                PreparedStatement pstmt = conn.prepareStatement(sql);
-                ResultSet rs = pstmt.executeQuery()) {
-
-            while (rs.next()) {
-                int id = rs.getInt(1);
-                String title = rs.getString(2);
-                String description = rs.getString(3);
-                LocalDateTime date = rs.getTimestamp(4).toLocalDateTime();
-                int numberOfAnswers = rs.getInt(5);
-                int numberOfViews = rs.getInt(6);
-                int userId = rs.getInt(7);
-
-                questions.add(new Question(id, title, description, date, numberOfAnswers, numberOfViews, userId));
-            }
-        } catch (SQLException exception) {
-            logger.logError(exception.getMessage());
-        }
-        return questions;
+    try (Connection conn = getConnection();
+      PreparedStatement pstmt = conn.prepareStatement(sql)) {
+      pstmt.setInt(1, currentViews + 1);
+      pstmt.setInt(2, id);
+      pstmt.executeUpdate();
+    } catch (SQLException exception) {
+      logger.logError(exception.getMessage());
     }
-
-
-    @Override
-    public void add(String title, String description,int numberOfAnswers, int numberOfViews) {
-        int userId = 1;
-        String query = "INSERT INTO questions(title, description, numberOfAnswers, numberOfViews, userid) VALUES(?,?,?,?,?)";
-
-        try (Connection conn = getConnection()) {
-            PreparedStatement preparedStatement = conn.prepareStatement(query);
-            preparedStatement.setString(1, title);
-            preparedStatement.setString(2, description);
-            preparedStatement.setInt(3, numberOfAnswers);
-            preparedStatement.setInt(4, numberOfViews);
-            preparedStatement.setInt(5, userId);
-
-            preparedStatement.executeUpdate();
-
-            logger.logInfo("New question added successfully!");
-
-            preparedStatement.close();
-        } catch (SQLException e) {
-            logger.logError("Error adding new question: " + e.getMessage());
-        }
-    }
-
+  }
 }
