@@ -10,7 +10,7 @@
     resize: none;
   }
 
-  & input[type=button] {
+  & input[type=submit] {
     margin: 2rem auto 0 auto;
     padding: 1rem 3rem 1rem 3rem;
     width: fit-content;
@@ -19,10 +19,10 @@
   }
 
   & textarea,
-  & input[type=button] {
+  & input[type=submit] {
     font-size: 2rem;
-    border: 0.2rem solid var(--secondary-main);
-    border-radius: 0.5rem;
+    border: 0.3rem solid var(--secondary-main);
+    border-radius: 1rem;
     box-shadow: 0.2rem 0.2rem 0.2rem var(--dark-gray);
   }
 }
