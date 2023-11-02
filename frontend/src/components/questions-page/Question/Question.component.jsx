@@ -1,4 +1,5 @@
 import './Question.styles.css';
+import {Link} from "react-router-dom";
 
 const Question = ({ data }) => {
   return (
@@ -7,8 +8,7 @@ const Question = ({ data }) => {
         <span className={'answer-box'}>{data.numberOfAnswers} answers</span>
         <span className={'views-box'}>{data.numberOfViews} views</span>
       </div>
-      {/*Title h2 will need to be updated into a Link component*/}
-      <h2>{data.title}</h2>
+      <Link to={`/questions/id/${data.id}`}>{data.title}</Link>
       <span className={'date'}><span>asked on</span> {new Date(data.createdAt).toLocaleString()} <span>by</span> {data.userName}</span>
     </article>
   );
