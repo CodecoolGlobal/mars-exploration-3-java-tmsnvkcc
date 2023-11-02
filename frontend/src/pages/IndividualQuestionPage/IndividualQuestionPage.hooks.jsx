@@ -33,4 +33,23 @@ const useHandleQuestionDetailsLoader = () => {
   };
 };
 
-export default useHandleQuestionDetailsLoader;
+const useHandleViewCountUpdate = () => {
+  const { id } = useParams();
+
+  useEffect(() => {
+    const updateViews = async () => {
+      try {
+        await fetch(`/questions/increase-view-count/${id}`, { method: 'PATCH' });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    updateViews();
+  }, []);
+}
+
+export {
+  useHandleQuestionDetailsLoader,
+  useHandleViewCountUpdate
+};
