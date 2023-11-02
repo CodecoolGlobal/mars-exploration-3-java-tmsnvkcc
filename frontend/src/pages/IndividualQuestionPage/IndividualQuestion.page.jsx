@@ -1,10 +1,11 @@
 import {
+  AddNewAnswer,
   AnswerBox,
-  QuestionBox
+  QuestionBox,
 } from 'components/individual-question-page';
 import {
   useHandleQuestionDetailsLoader,
-  useHandleViewCountUpdate
+  useHandleViewCountUpdate,
 } from './IndividualQuestionPage.hooks';
 import './IndividualQuestionPage.styles.css';
 
@@ -29,6 +30,7 @@ const IndividualQuestionPage = () => {
       />
       <p className={'answer-number'}>{data.answerForSingleQuestionDTOs.length} {data.answerForSingleQuestionDTOs.length === 1 ? 'answer' : 'answers'}.</p>
       {data.answerForSingleQuestionDTOs.map((answer) => <AnswerBox key={answer.id} data={answer} />)}
+      <AddNewAnswer />
     </section>
   );
 };

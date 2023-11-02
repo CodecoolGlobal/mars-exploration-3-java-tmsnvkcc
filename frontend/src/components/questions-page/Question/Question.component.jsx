@@ -1,5 +1,5 @@
 import './Question.styles.css';
-import {Link} from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 const Question = ({ data }) => {
   return (

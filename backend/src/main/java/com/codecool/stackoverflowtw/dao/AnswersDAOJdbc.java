@@ -150,4 +150,30 @@ public class AnswersDAOJdbc implements AnswersDAO {
       logger.logError(exception.getMessage());
     }
   }
+
+  @Override
+  public void add(int questionId, String body) {
+    int userId = 1;
+
+    String sql =
+      """
+        INSERT INTO
+          answers(questionId, description, userId, numberOfLikes, numberOfDislikes)
+        VALUES
+          (?, ?, ?, ?, ?)
+      """;
+
+    try (Connection conn = getConnection();
+       PreparedStatement pstmt = conn.prepareStatement(sql)) {
+      pstmt.setInt(1, questionId);
+      pstmt.setString(2, body);
+      pstmt.setInt(3, userId);
+      pstmt.setInt(4, 0);
+      pstmt.setInt(5, 0);
+
+      pstmt.executeUpdate();
+    } catch (SQLException exception) {
+      logger.logError(exception.getMessage());
+    }
+  }
 }

@@ -1,7 +1,7 @@
 import './AddQuestion.css';
 import { useNavigate } from 'react-router-dom';
-import { PageTitle } from '../../components/general';
-import NewQuestionForm from '../../components/question-adding-page/NewQuestionForm';
+import { PageTitle } from 'components/general';
+import NewQuestionForm from 'components/question-adding-page/NewQuestionForm';
 
 const AddQuestionPage = () => {
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ const AddQuestionPage = () => {
       },
       body: JSON.stringify(question),
     });
-    navigate('/');
+    navigate('/questions');
   };
 
   return (

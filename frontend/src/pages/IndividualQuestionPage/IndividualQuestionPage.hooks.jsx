@@ -16,6 +16,7 @@ const useHandleQuestionDetailsLoader = () => {
           method: 'GET',
         });
         const data = await response.json();
+
         setData(data);
       } catch (error) {
         console.error(error);
@@ -47,9 +48,9 @@ const useHandleViewCountUpdate = () => {
 
     updateViews();
   }, []);
-}
+};
 
 export {
   useHandleQuestionDetailsLoader,
-  useHandleViewCountUpdate
+  useHandleViewCountUpdate,
 };

@@ -90,19 +90,20 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
 
   @Override
   public void increaseViewCount(int id, int currentViews) {
+    int nextViewCount = currentViews + 1;
     String sql =
       """
         UPDATE
           questions
         SET
-          numberofviews = ?
+          numberOfViews = ?
         WHERE
           id = ?
       """;
 
     try (Connection conn = getConnection();
       PreparedStatement pstmt = conn.prepareStatement(sql)) {
-      pstmt.setInt(1, currentViews + 1);
+      pstmt.setInt(1, nextViewCount);
       pstmt.setInt(2, id);
       pstmt.executeUpdate();
     } catch (SQLException exception) {
