@@ -40,7 +40,10 @@ public class QuestionService {
       int numberOfAnswers = question.getNumberOfAnswers();
       int numberOfViews = question.getNumberOfViews();
       LocalDateTime createdAt = question.getCreatedAt();
-      String userName = usersDAO.stream().filter(user -> user.getId() == question.getUserId()).collect(Collectors.toList()).get(0).getUsername();
+      String userName = usersDAO.stream()
+                                .filter(user -> user.getId() == question.getUserId())
+                                .collect(Collectors.toList())
+                                .get(0).getUsername();
 
       questions.add(new QuestionsForAllQuestionsPageDTO(id, userName, title, numberOfAnswers, numberOfViews, createdAt));
     }

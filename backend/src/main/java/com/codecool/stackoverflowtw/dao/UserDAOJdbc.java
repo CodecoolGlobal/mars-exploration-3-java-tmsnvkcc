@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class UserDAOJdbc implements UserDAO {
     try (
       Connection conn = psqlConnector.getConnection();
       PreparedStatement pstmt = conn.prepareStatement(sql);
-      ResultSet rs = pstmt.executeQuery(sql)) {
+      ResultSet rs = pstmt.executeQuery()) {
 
       while (rs.next()) {
         int id = rs.getInt(1);

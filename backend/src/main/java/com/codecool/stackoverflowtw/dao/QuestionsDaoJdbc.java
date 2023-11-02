@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,18 +41,18 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
     try (
       Connection conn = psqlConnector.getConnection();
       PreparedStatement pstmt = conn.prepareStatement(sql);
-      ResultSet rs = pstmt.executeQuery(sql)) {
+      ResultSet rs = pstmt.executeQuery()) {
 
       while (rs.next()) {
         int id = rs.getInt(1);
-        String userName = rs.getString(2);
-        String title = rs.getString(3);
-        int numberOfAnswers = rs.getInt(4);
-        int numberOfViews = rs.getInt(5);
-        LocalDateTime date = rs.getTimestamp(6).toLocalDateTime();
+        String title = rs.getString(2);
+        String description = rs.getString(3);
+        LocalDateTime date = rs.getTimestamp(4).toLocalDateTime();
+        int numberOfAnswers = rs.getInt(5);
+        int numberOfViews = rs.getInt(6);
         int userId = rs.getInt(7);
 
-        questions.add(new Question(id, userName, title, date, numberOfAnswers, numberOfViews, userId));
+        questions.add(new Question(id, title, description, date, numberOfAnswers, numberOfViews, userId));
       }
     } catch (SQLException exception) {
       logger.logError(exception.getMessage());
