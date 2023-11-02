@@ -63,6 +63,7 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
         return questions;
     }
 
+
     @Override
     public void add(String title, String description,int numberOfAnswers, int numberOfViews){
         int userId = 1;
@@ -85,4 +86,8 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
             logger.logError("Error adding new question: " + e.getMessage());
         }
     }
+
+    return questions;
+  }
+
 }
