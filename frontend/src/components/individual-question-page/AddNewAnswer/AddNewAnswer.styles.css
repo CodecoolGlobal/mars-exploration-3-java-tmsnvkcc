@@ -1,0 +1,28 @@
+.new-answer-form {
+  display: flex;
+  flex-direction: column;
+  margin: 10rem auto 0 auto;
+
+  & textarea {
+    width: 50rem;
+    height: 30rem;
+    padding: 2rem 2rem 2rem 2rem;
+    resize: none;
+  }
+
+  & input[type=button] {
+    margin: 2rem auto 0 auto;
+    padding: 1rem 3rem 1rem 3rem;
+    width: fit-content;
+    color: var(--primary-main);
+
+  }
+
+  & textarea,
+  & input[type=button] {
+    font-size: 2rem;
+    border: 0.2rem solid var(--secondary-main);
+    border-radius: 0.5rem;
+    box-shadow: 0.2rem 0.2rem 0.2rem var(--dark-gray);
+  }
+}
