@@ -6,7 +6,7 @@ import './Questions.styles.css';
 const QuestionsPage = () => {
   const { data, loading } = useHandleQuestionsFetch();
 
-  if (loading) {
+  if (loading || data === null) {
     return (
       <div>Loading data...</div>
     );

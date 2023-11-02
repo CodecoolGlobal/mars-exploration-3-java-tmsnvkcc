@@ -8,7 +8,7 @@ const Question = ({ data }) => {
         <span className={'answer-box'}>{data.numberOfAnswers} answers</span>
         <span className={'views-box'}>{data.numberOfViews} views</span>
       </div>
-      <Link to={`/questions/id/${data.id}`}>{data.title}</Link>
+      <Link to={`/questions/id/${data.id}`} className={'title'}>{data.title}</Link>
       <span className={'date'}><span>asked on</span> {new Date(data.createdAt).toLocaleString()} <span>by</span> {data.userName}</span>
     </article>
   );
