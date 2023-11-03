@@ -66,6 +66,8 @@ public class QuestionService {
     return orderedQuestions;
   }
 
+  // break up into smaller methods
+  // separate them into their respective classes, e.g. MapperClass
   public SingleQuestionDTO getQuestionById(int id) {
     SingleQuestionDTO questionWithAnswers;
     List<AnswerForSingleQuestionDTO> answers = new ArrayList<>();
@@ -95,8 +97,9 @@ public class QuestionService {
       int numberOfDislikes = answer.getNumberOfDislikes();
       String answerUserName = usersDAO.stream()
         .filter(user -> user.getId() == answer.getUserId())
-        .collect(Collectors.toList())
-        .get(0).getUsername();
+        .findFirst()
+        .get()
+        .getUsername();
 
       answers.add(new AnswerForSingleQuestionDTO(answerId, answerDescription, answerCreatedAt, numberOfLikes, numberOfDislikes, answerUserName));
     }
